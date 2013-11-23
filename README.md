@@ -4,9 +4,14 @@ Description
 This cookbook provides an easy way to install the New Relic PHP agent and the New Relic server monitor.
 
 More information?
-* https://newrelic.com/docs/server/new-relic-for-server-monitoring
-* https://newrelic.com/docs/php/new-relic-for-php
-* https://newrelic.com/docs/python/new-relic-for-python
+* https://docs.newrelic.com/docs/server/new-relic-for-server-monitoring
+* https://docs.newrelic.com/docs/php/new-relic-for-php
+* https://docs.newrelic.com/docs/python/new-relic-for-python
+* https://docs.newrelic.com/docs/dotnet/new-relic-for-net
+* https://docs.newrelic.com/docs/java/new-relic-for-java
+
+https://pypi.python.org/pypi/newrelic_plugin_agent
+https://github.com/MeetMe/newrelic-plugin-agent#installation-instructions
 
 Requirements
 ============
@@ -28,6 +33,9 @@ This cookbook recommends on the following cookbooks:
 * Installing the Python agent? You'll need the python cookbook to be available.
 * Installing the DotNet agent? You'll need the ms_dotnet4 cookbook to be available.
 
+* Installing the plugin agent? You'll need the python cookbook to be available.
+* Making use of the deployment LWRP? You'll need the curl cookbook to be available.
+
 ## Platforms:
 
 * Debian
@@ -48,6 +56,7 @@ Attributes
 ### BASIC
 * `node['newrelic']['server_monitoring']['license']` - Your New Relic license key for server monitoring purposes (usually same license key as application monitoring license)
 * `node['newrelic']['application_monitoring']['license']` - Your New Relic license key for application monitoring purposes (usually same license key as server monitoring license)
+* `node['newrelic']['plugin_agent']['license']` - Your New Relic license key for plugin agent purposes (usually same license key as server monitoring and application monitoring license)
 
 ### ADVANCED
 * `node['newrelic']['server_monitoring']['logfile']`
@@ -127,6 +136,15 @@ Attributes
 * `node['newrelic']['log_limit_in_kbytes']` - The maximum number of bytes to write to any one log file
 * `node['newrelic']['log_daily']` - Override other log rolling configuration and roll the logs daily
 
+## meetme-plugin-agent.rb:
+* `node['newrelic']['service_name']` - The New Relic MeetMe plugin agent service name, defaults to "newrelic-plugin-agent"
+* `node['newrelic']['wake_interval']` - The New Relic MeetMe plugin agent wake interval, defaults to 60
+* `node['newrelic']['config_file']` - The New Relic MeetMe plugin agent config file name, defaults to "/etc/newrelic/newrelic_plugin_agent.cfg"
+* `node['newrelic']['pid_file']` - The New Relic MeetMe plugin agent PID file name, defaults to "/var/run/newrelic/newrelic_plugin_agent.pid"
+* `node['newrelic']['log_file']` - The New Relic MeetMe plugin agent log file name, defaults to "/var/log/newrelic/newrelic_plugin_agent.log"
+* `node['newrelic']['user']` - The New Relic MeetMe plugin agent user, defaults to "newrelic"
+* `node['newrelic']['additional_requirements']` - The New Relic MeetMe plugin agent's additional requirements, eg. {"mongodb", "pgbouncer", "postgresql"} - defaults to {}
+
 Usage
 =====
 
@@ -149,11 +167,12 @@ References
 ==========
 
 * [New Relic home page] (http://newrelic.com/)
-* [New Relic for Server Monitoring] (https://newrelic.com/docs/server/new-relic-for-server-monitoring)
-* [New Relic for PHP] (https://newrelic.com/docs/php/new-relic-for-php)
+* [New Relic for Server Monitoring] (https://docs.newrelic.com/docs/server/new-relic-for-server-monitoring)
+* [New Relic for PHP] (https://docs.newrelic.com/docs/php/new-relic-for-php)
 * [newrelic-daemon startup modes] (https://newrelic.com/docs/php/newrelic-daemon-startup-modes)
-* [New Relic for Python] (https://newrelic.com/docs/python/new-relic-for-python)
-* [New Relic for .NET] (https://newrelic.com/docs/dotnet/new-relic-for-net)
+* [New Relic for Python] (https://docs.newrelic.com/docs/python/new-relic-for-python)
+* [New Relic for .NET] (https://docs.newrelic.com/docs/dotnet/new-relic-for-net)
+* [New Relic for Java] (https://docs.newrelic.com/docs/java/new-relic-for-java)
 * ["newrelic" cookbook by heavywater on github] (https://github.com/heavywater/chef-newrelic)
 * ["newrelic_monitoring" cookbook on community.opscode.com] (http://community.opscode.com/cookbooks/newrelic_monitoring)
 * ["newrelic_monitoring" cookbook on github] (https://github.com/8thBridge/chef-newrelic-monitoring)

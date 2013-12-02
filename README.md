@@ -25,8 +25,9 @@ Make sure you run Chef >= 0.10.0.
 This cookbook recommends on the following cookbooks:
 
 * php
-* python::pip
+* python
 * ms_dotnet4
+* curl
 
 ### Depending on your environment, these recommended cookbooks are actual dependencies (depends):
 * Installing the PHP agent? You'll need the php cookbook to be available.
@@ -136,14 +137,32 @@ Attributes
 * `node['newrelic']['log_limit_in_kbytes']` - The maximum number of bytes to write to any one log file
 * `node['newrelic']['log_daily']` - Override other log rolling configuration and roll the logs daily
 
-## meetme-plugin-agent.rb:
-* `node['newrelic']['service_name']` - The New Relic MeetMe plugin agent service name, defaults to "newrelic-plugin-agent"
-* `node['newrelic']['wake_interval']` - The New Relic MeetMe plugin agent wake interval, defaults to 60
-* `node['newrelic']['config_file']` - The New Relic MeetMe plugin agent config file name, defaults to "/etc/newrelic/newrelic_plugin_agent.cfg"
-* `node['newrelic']['pid_file']` - The New Relic MeetMe plugin agent PID file name, defaults to "/var/run/newrelic/newrelic_plugin_agent.pid"
-* `node['newrelic']['log_file']` - The New Relic MeetMe plugin agent log file name, defaults to "/var/log/newrelic/newrelic_plugin_agent.log"
-* `node['newrelic']['user']` - The New Relic MeetMe plugin agent user, defaults to "newrelic"
-* `node['newrelic']['additional_requirements']` - The New Relic MeetMe plugin agent's additional requirements, eg. {"mongodb", "pgbouncer", "postgresql"} - defaults to {}
+## plugin-agent.rb:
+* `node['newrelic']['plugin_agent']['service_name']` - The New Relic plugin agent service name, defaults to "newrelic-plugin-agent"
+* `node['newrelic']['plugin_agent']['services']` - A hash of New Relic plugin agent services, defaults to nil
+* `node['newrelic']['plugin_agent']['wake_interval']` - The New Relic plugin agent wake interval, defaults to 60
+* `node['newrelic']['plugin_agent']['config_file']` - The New Relic plugin agent config file name, defaults to "/etc/newrelic/newrelic_plugin_agent.cfg"
+* `node['newrelic']['plugin_agent']['pid_file']` - The New Relic plugin agent PID file name, defaults to "/var/run/newrelic/newrelic_plugin_agent.pid"
+* `node['newrelic']['plugin_agent']['log_file']` - The New Relic plugin agent log file name, defaults to "/var/log/newrelic/newrelic_plugin_agent.log"
+* `node['newrelic']['plugin_agent']['user']` - The New Relic plugin agent user, defaults to "newrelic"
+* `node['newrelic']['plugin_agent']['additional_requirements']` - The New Relic plugin agent's additional requirements, eg. {"mongodb", "pgbouncer", "postgresql"} - defaults to {}
+
+Resources / Providers
+=====================
+
+The deployment LWRP sends deployment information to New Relic.
+
+## Actions
+:notify - Notify New Relic of a deployment
+
+## Attribute parameters
+api_key - Your New Relic API key
+app_name - The name of the application, found in the newrelic.yml file
+app_id - The ID # of the application
+description - Text annotation for the deployment — notes for you
+revision - The revision number from your source control system (SVN, git, etc.)
+changelog - A list of changes for this deployment
+user - The name of the user/process that triggered this deployment
 
 Usage
 =====

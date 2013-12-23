@@ -9,9 +9,11 @@
 #BASIC CONFIG
 #############
 #license(s)
-default['newrelic']['server_monitoring']['license'] = "CHANGE_ME"
-default['newrelic']['application_monitoring']['license'] = "CHANGE_ME"
-default['newrelic']['plugin_agent']['license'] = "CHANGE_ME"
+default['newrelic']['license'] = "CHANGE_ME"
+
+default['newrelic']['server_monitoring']['license'] = node['newrelic']['license']
+default['newrelic']['application_monitoring']['license'] = node['newrelic']['license']
+default['newrelic']['plugin_agent']['license'] = node['newrelic']['license']
 
 ################
 #ADVANCED CONFIG

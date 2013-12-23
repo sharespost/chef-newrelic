@@ -57,7 +57,7 @@ Attributes
 ### BASIC
 * `node['newrelic']['server_monitoring']['license']` - Your New Relic license key for server monitoring purposes (usually same license key as application monitoring license)
 * `node['newrelic']['application_monitoring']['license']` - Your New Relic license key for application monitoring purposes (usually same license key as server monitoring license)
-* `node['newrelic']['plugin_agent']['license']` - Your New Relic license key for plugin agent purposes (usually same license key as server monitoring and application monitoring license)
+* `node['newrelic']['meetme_plugin_agent']['license']` - Your New Relic license key for plugin agent purposes (usually same license key as server monitoring and application monitoring license)
 
 ### ADVANCED
 * `node['newrelic']['server_monitoring']['logfile']`
@@ -137,15 +137,15 @@ Attributes
 * `node['newrelic']['log_limit_in_kbytes']` - The maximum number of bytes to write to any one log file
 * `node['newrelic']['log_daily']` - Override other log rolling configuration and roll the logs daily
 
-## plugin-agent.rb:
-* `node['newrelic']['plugin_agent']['service_name']` - The New Relic plugin agent service name, defaults to "newrelic-plugin-agent"
-* `node['newrelic']['plugin_agent']['services']` - A hash of New Relic plugin agent services, defaults to nil
-* `node['newrelic']['plugin_agent']['wake_interval']` - The New Relic plugin agent wake interval, defaults to 60
-* `node['newrelic']['plugin_agent']['config_file']` - The New Relic plugin agent config file name, defaults to "/etc/newrelic/newrelic_plugin_agent.cfg"
-* `node['newrelic']['plugin_agent']['pid_file']` - The New Relic plugin agent PID file name, defaults to "/var/run/newrelic/newrelic_plugin_agent.pid"
-* `node['newrelic']['plugin_agent']['log_file']` - The New Relic plugin agent log file name, defaults to "/var/log/newrelic/newrelic_plugin_agent.log"
-* `node['newrelic']['plugin_agent']['user']` - The New Relic plugin agent user, defaults to "newrelic"
-* `node['newrelic']['plugin_agent']['additional_requirements']` - The New Relic plugin agent's additional requirements, eg. {"mongodb", "pgbouncer", "postgresql"} - defaults to {}
+## meetme-plugin-agent.rb:
+* `node['newrelic']['meetme_plugin_agent']['service_name']` - The New Relic plugin agent service name, defaults to "newrelic-plugin-agent"
+* `node['newrelic']['meetme_plugin_agent']['services']` - A hash of New Relic plugin agent services, defaults to nil
+* `node['newrelic']['meetme_plugin_agent']['wake_interval']` - The New Relic plugin agent wake interval, defaults to 60
+* `node['newrelic']['meetme_plugin_agent']['config_file']` - The New Relic plugin agent config file name, defaults to "/etc/newrelic/newrelic_plugin_agent.cfg"
+* `node['newrelic']['meetme_plugin_agent']['pid_file']` - The New Relic plugin agent PID file name, defaults to "/var/run/newrelic/newrelic_plugin_agent.pid"
+* `node['newrelic']['meetme_plugin_agent']['log_file']` - The New Relic plugin agent log file name, defaults to "/var/log/newrelic/newrelic_plugin_agent.log"
+* `node['newrelic']['meetme_plugin_agent']['user']` - The New Relic plugin agent user, defaults to "newrelic"
+* `node['newrelic']['meetme_plugin_agent']['additional_requirements']` - The New Relic plugin agent's additional requirements, eg. {"mongodb", "pgbouncer", "postgresql"} - defaults to {}
 
 Resources / Providers
 =====================

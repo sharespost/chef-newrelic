@@ -5,17 +5,18 @@
 # Copyright 2012-2014, Escape Studios
 #
 
-#############
-#BASIC CONFIG
-#############
-#license(s)
-default['newrelic']['server_monitoring']['license'] = "CHANGE_ME"
-default['newrelic']['application_monitoring']['license'] = "CHANGE_ME"
+##############
+# BASIC CONFIG
+##############
+# license(s)
+default['newrelic']['license'] = nil
+default['newrelic']['server_monitoring']['license'] = node['newrelic']['license']
+default['newrelic']['application_monitoring']['license'] = node['newrelic']['license']
 
-################
-#ADVANCED CONFIG
-################
-#server monitoring
+#################
+# ADVANCED CONFIG
+#################
+# server monitoring
 default['newrelic']['server_monitoring']['logfile'] = nil
 default['newrelic']['server_monitoring']['loglevel'] = nil
 default['newrelic']['server_monitoring']['proxy'] = nil
@@ -26,16 +27,14 @@ default['newrelic']['server_monitoring']['hostname'] = nil
 default['newrelic']['server_monitoring']['pidfile'] = nil
 default['newrelic']['server_monitoring']['collector_host'] = nil
 default['newrelic']['server_monitoring']['timeout'] = nil
-default['newrelic']['server_monitoring']['windows_version'] = "2.0.0.198"
-default['newrelic']['server_monitoring']['windows64_checksum'] = "5a8f3f5e8f15997463430401756d377c321c8899c2790ca85e5587a5b643651e"
-default['newrelic']['server_monitoring']['windows32_checksum'] = "ac2b65eecaad461fdd2e4386e3e4c9f96ea940b35bdf7a8c532c21dbd1c99ff0"
 
-#application monitoring
+# application monitoring
 default['newrelic']['application_monitoring']['enabled'] = nil
 default['newrelic']['application_monitoring']['logfile'] = nil
+default['newrelic']['application_monitoring']['logfile_path'] = nil
 default['newrelic']['application_monitoring']['loglevel'] = nil
-default['newrelic']['application_monitoring']['appname'] = nil
-default['newrelic']['application_monitoring']['daemon']['logfile'] = "/var/log/newrelic/newrelic-daemon.log"
+default['newrelic']['application_monitoring']['app_name'] = nil
+default['newrelic']['application_monitoring']['daemon']['logfile'] = '/var/log/newrelic/newrelic-daemon.log'
 default['newrelic']['application_monitoring']['daemon']['loglevel'] = nil
 default['newrelic']['application_monitoring']['daemon']['port'] = nil
 default['newrelic']['application_monitoring']['daemon']['max_threads'] = nil
@@ -48,8 +47,10 @@ default['newrelic']['application_monitoring']['daemon']['location'] = nil
 default['newrelic']['application_monitoring']['daemon']['collector_host'] = nil
 default['newrelic']['application_monitoring']['daemon']['dont_launch'] = nil
 default['newrelic']['application_monitoring']['capture_params'] = nil
+default['newrelic']['application_monitoring']['cross_application_tracer']['enable'] = nil
 default['newrelic']['application_monitoring']['ignored_params'] = nil
 default['newrelic']['application_monitoring']['error_collector']['enable'] = nil
+default['newrelic']['application_monitoring']['error_collector']['ignore_errors'] = nil
 default['newrelic']['application_monitoring']['error_collector']['record_database_errors'] = nil
 default['newrelic']['application_monitoring']['error_collector']['prioritize_api_errors'] = nil
 default['newrelic']['application_monitoring']['browser_monitoring']['auto_instrument'] = nil

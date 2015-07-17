@@ -6,6 +6,12 @@
 #
 
 newrelic_server_monitor 'Install' do
+  custom_hostname = if node['opsworks']
+    "#{node['opsworks']['stack']['name'].downcase}-#{node['opsworks']['instance']['hostname']}"
+  else
+    node['newrelic']['server_monitoring']['hostname']
+  end
+
   license NewRelic.server_monitoring_license(node)
   logfile node['newrelic']['server_monitoring']['logfile'] unless node['newrelic']['server_monitoring']['logfile'].nil?
   loglevel node['newrelic']['server_monitoring']['loglevel'] unless node['newrelic']['server_monitoring']['loglevel'].nil?
@@ -13,7 +19,7 @@ newrelic_server_monitor 'Install' do
   ssl NewRelic.to_boolean(node['newrelic']['server_monitoring']['ssl']) unless node['newrelic']['server_monitoring']['ssl'].nil?
   ssl_ca_bundle node['newrelic']['server_monitoring']['ssl_ca_bundle'] unless node['newrelic']['server_monitoring']['ssl_ca_bundle'].nil?
   ssl_ca_path node['newrelic']['server_monitoring']['ssl_ca_path'] unless node['newrelic']['server_monitoring']['ssl_ca_path'].nil?
-  hostname node['newrelic']['server_monitoring']['hostname'] unless node['newrelic']['server_monitoring']['hostname'].nil?
+  hostname custom_hostname unless custom_hostname.nil?
   labels node['newrelic']['server_monitoring']['labels'] unless node['newrelic']['server_monitoring']['labels'].nil?
   pidfile node['newrelic']['server_monitoring']['pidfile'] unless node['newrelic']['server_monitoring']['pidfile'].nil?
   collector_host node['newrelic']['server_monitoring']['collector_host'] unless node['newrelic']['server_monitoring']['collector_host'].nil?

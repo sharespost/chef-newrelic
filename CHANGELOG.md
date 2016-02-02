@@ -2,6 +2,33 @@
 
 This file is used to list changes made in each version (>= 2.11.0) of the newrelic cookbook.
 
+## v2.16.0 (2015-09-17)
+
+- Add verify_agent_config virtualenv support
+- Refactoring: set agent_type and license as default in resources
+
+## v2.15.1 (2015-09-17)
+
+- Bugfix: Fedora is [not](https://github.com/chef/ohai/blob/master/lib/ohai/plugins/linux/platform.rb#L180) part of the RedHat platform_family
+
+## v2.15.0 (2015-09-12)
+
+- Make service action configurable; service_action will be restart by default as per New Relic docs
+- Ability to add additional config
+
+## v2.14.2 (2015-08-07)
+
+- Trigger apt-get update run
+
+## v2.14.1 (2015-07-27)
+
+- Do not stop newrelic-daemon unnecessarily when using agent mode
+
+## v2.14.0 (2015-07-23)
+
+- Addition of matcher methods for resources
+- Cleanup documentation on newrelic_deployment LWRP
+
 ## v2.13.0 (2015-06-19)
 
 - Ability to configure the alert policy group when installing/removing server monitor

@@ -148,6 +148,7 @@ Make sure you run Chef >= 0.10.0.
 * `node['newrelic']['java_agent']['log_daily']` - Override other log rolling configuration and roll the logs daily
 * `node['newrelic']['java_agent']['agent_action']` - Agent action, defaults to :install
 * `node['newrelic']['java_agent']['execute_agent_action']` - Execute the agent action or not, defaults to true
+* `node['newrelic']['java_agent']['enable_custom_tracing']` - Configure New Relic to detect custom traces
 * `node['newrelic']['java_agent']['app_location']` - Application server's location, defaults to nil
 * `node['newrelic']['java_agent']['template']['cookbook']` - Sets cookbook for template, defaults to 'newrelic'
 * `node['newrelic']['java_agent']['template']['source']` - Sets source for template, defaults to 'agent/newrelic.yml.erb'
@@ -231,6 +232,7 @@ The `newrelic_server_monitor` resource will handle the requirements to configure
 * `'pidfile'` defaults to nil
 * `'collector_host'` defaults to nil
 * `'timeout'` defaults to nil
+* `'alert_policy_id'` default to nil
 
 #### Example  
 ```ruby
@@ -252,10 +254,12 @@ The `newrelic_agent_php` resource will handle the requirements to install php ap
 #### Attribute parameters
 
 * `'license'` New Relic license key
+* `'api_key'` New Relic API key
 * `'install_silently'` - Determine whether to run the install in silent mode, defaults to false
-* `'app_name'` is missing it will default to `PHP Application`.  
+* `'app_name'` if missing it will default to `PHP Application`.
 * `'startup_mode'` - The newrelic-daemon startup mode ("agent"/"external"), defaults to "agent"
-* `'service_name'` - The web server service name. If it is missing the resource will not handle the webserver reload. This allows this to be handled by the recipe, defaults to nil
+* `'service_name'` - The web server service name
+* `'service_action'` - The web server service action, defaults to "restart"
 * `'config_file'` - The New Relic php agent config file, depends on your php external configuration directory; e.g. /etc/php5/conf.d/newrelic.ini, /etc/php5/mods-available/newrelic.ini, ... Defaults to nil
 * `'config_file_to_be_deleted'` - The New Relic php agent-generated config file, e.g. /etc/php5/cli/conf.d/newrelic.ini. If set, the file will get deleted during the Chef run as we want the Chef-generated config file to be used instead (`'config_file'`), defaults to nil
 * `'execute_php5enmod'` - Executes "php5enmod newrelic" if true. Needed if you use the mods-available directory, defaults to false
@@ -375,7 +379,6 @@ The `newrelic_agent_ruby` resource will handle the requirements to install ruby 
 ```ruby
 newrelic_agent_ruby 'Install' do
   license '0000ffff0000ffff0000ffff0000ffff0000ffff'
-  agent_type 'ruby'
   app_name 'ruby_test_app'
 end
 ```
@@ -451,8 +454,8 @@ The `newrelic_agent_java` resource will handle the requirements to install java 
 newrelic_agent_java 'Install' do
   license '0000ffff0000ffff0000ffff0000ffff0000ffff'  
   install_dir '/opt/newrelic/java'
-  agent_type 'java'
   app_name 'java_test_app'
+```
 
 ### `newrelic_agent_python`  
 This cookbook includes an LWRP for installing the newrelic python agent
@@ -594,8 +597,8 @@ This cookbook includes an LWRP for notifying New Relic of a deployment
 
 ```ruby
 newrelic_deployment "my-application" do
-    api_key "abcdef"
-    #app_name "my-application"
+    key_type "license_key"
+    key "yourlicensekey"
     app_id 1234567
     description "some description"
     revision "some revision"
@@ -621,7 +624,6 @@ This cookbook includes an LWRP for generating the newrelic.yml configuration fil
 ```ruby
 newrelicyml="#{my_app_path}/newrelic.yml"
 newrelic_yml newrelicyml do
-  agent_type 'java'
   app_name 'my-super-duper-application'
 end
 ```

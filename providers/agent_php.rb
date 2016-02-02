@@ -72,7 +72,7 @@ def newrelic_install
       )
     end
     action :nothing
-    notifies :reload, "service[#{new_resource.service_name}]", :delayed if new_resource.service_name
+    notifies new_resource.service_action, "service[#{new_resource.service_name}]", :delayed if new_resource.service_name
   end
 end
 
@@ -100,7 +100,7 @@ end
 
 def generate_agent_config
   # configure New Relic INI file and set the daemon related options (documented at /usr/lib/newrelic-php5/scripts/newrelic.ini.template)
-  # and reload the web server in order to pick up the new settings
+  # and reload/restart (determined by service_action) the web server in order to pick up the new settings
   execute_php5enmod = new_resource.execute_php5enmod ? 'true' : 'false'
   template new_resource.config_file do
     cookbook new_resource.cookbook_ini
@@ -111,11 +111,12 @@ def generate_agent_config
     variables(
       :resource => new_resource
     )
+    sensitive true
     action :create
     if execute_php5enmod
       notifies :run, 'execute[newrelic-php5enmod]', :immediately
     end
-    notifies :reload, "service[#{new_resource.service_name}]", :delayed if new_resource.service_name
+    notifies new_resource.service_action, "service[#{new_resource.service_name}]", :delayed if new_resource.service_name
   end
 end
 
@@ -136,8 +137,10 @@ def startup_mode_config
   when 'agent'
     # agent startup mode
     # ensure that the daemon isn't currently running
+    # only stop the daemon if it has not been run by the agent (with a newrelic.cfg)
     service 'newrelic-daemon' do
       action [:disable, :stop] # stops the service if it's running and disables it from starting at system boot time
+      only_if { ::File.exist?('/etc/newrelic/newrelic.cfg') }
     end
     # ensure that the file /etc/newrelic/newrelic.cfg does not exist if it does, move it aside (or remove it)
     execute 'newrelic-backup-cfg' do
@@ -163,7 +166,7 @@ def startup_mode_config
       )
       action :create
       notifies :restart, 'service[newrelic-daemon]', :immediately
-      notifies :reload, "service[#{new_resource.service_name}]", :delayed if new_resource.service_name
+      notifies new_resource.service_action, "service[#{new_resource.service_name}]", :delayed if new_resource.service_name
     end
     service 'newrelic-daemon' do
       action [:enable, :start] # starts the service if it's not running and enables it to start at system boot time

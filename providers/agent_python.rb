@@ -50,13 +50,15 @@ def generate_agent_config
     variables(
       :resource => new_resource
     )
+    sensitive true
     action :create
   end
 end
 
 def verify_agent_config
+  virtualenv = "#{new_resource.virtualenv}/bin/" if new_resource.virtualenv
   execute 'verify-python-agent' do
-    command "newrelic-admin validate-config #{new_resource.config_file}"
+    command "#{virtualenv}newrelic-admin validate-config #{new_resource.config_file}"
   end
 end
 

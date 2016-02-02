@@ -17,4 +17,6 @@ default['newrelic']['php_agent']['template']['cookbook_ini'] = nil
 default['newrelic']['php_agent']['template']['source_ini'] = nil
 default['newrelic']['php_agent']['template']['cookbook'] = nil
 default['newrelic']['php_agent']['template']['source'] = nil
-default['newrelic']['php_agent']['additional_config'] = {}
+default['newrelic']['php_agent']['additional_config'] = {
+  "newrelic.attributes.include" => "request.parameters.Action"
+}

@@ -18,5 +18,10 @@ default['newrelic']['php_agent']['template']['source_ini'] = nil
 default['newrelic']['php_agent']['template']['cookbook'] = nil
 default['newrelic']['php_agent']['template']['source'] = nil
 default['newrelic']['php_agent']['additional_config'] = {
-  "newrelic.attributes.include" => "request.parameters.Action"
+  "newrelic.attributes.include" => "request.parameters.Action",
+  "newrelic.attributes.include" => "request.parameters.ReportType",
+  "newrelic.attributes.include" => "request.parameters.AccessID",
+  "newrelic.attributes.include" => "request.parameters.DocumentID",
+  "newrelic.attributes.include" => "request.parameters.FirmID",
+  "newrelic.attributes.include" => "request.parameters.UserID"
 }
